@@ -9,17 +9,86 @@
 import UIKit
 
 class ViewController: UIViewController {
+    @IBOutlet private weak var display: UILabel!
+    
+    private var userIsTyping = false
+    private var decUsed = false
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    @IBOutlet weak var descrip: UILabel!
+    
+    
+    
+    @IBAction func touchDigit(sender: UIButton) {
+        let digit = sender.currentTitle!
+        if userIsTyping{
+            if digit == "." && decUsed == true{
+                return
+            }else if digit == "." && decUsed == false {
+                decUsed = true
+            }
+            let textInDisplay = display.text!
+            display.text = textInDisplay + digit
+        } else {
+            display.text = digit
+        }
+        userIsTyping = true
+    }
+    
+    private var displayValue: Double{
+        get{
+            return Double(display.text!)!
+        }
+        set{
+            display.text = String(newValue)
+        }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    private var brain = CalculatorBrain()
+    
+    
+    @IBAction func performOperation(sender: UIButton) {
+        if userIsTyping{
+            brain.setOperand(displayValue)
+            brain.setDescrip(String(displayValue))
+            if brain.getIsPartial(){
+                descrip.text! =  brain.getDescrip() + "..."
+            }
+            
+            userIsTyping = false
+        }
+        if let mathSymbol = sender.currentTitle{
+            brain.setDescrip(mathSymbol)
+            descrip.text! =  brain.getDescrip()
+            if brain.getIsPartial(){
+                descrip.text! =  brain.getDescrip() + "..."
+            }
+            brain.performOperation(mathSymbol)
+        }
+        displayValue = brain.result
+    }
+    
+    var savedProgram: CalculatorBrain.PropertyList?
+    
+    //@IBAction func Clear() {
+    //    CalculatorBrain.clear(<#T##CalculatorBrain#>)
+    //}
+    
+    
+    @IBAction func save() {
+        savedProgram = brain.program
     }
 
+    @IBAction func restore() {
+        if savedProgram != nil {
+            brain.program = savedProgram!
+            displayValue = brain.result
+        }
+    }
+    
+    func setOperand(variableName: String){
+        
+    }
+    //var variableValues: Dictionary<String, Double>
 
 }
 
