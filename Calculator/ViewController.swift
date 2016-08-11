@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     @IBAction func touchDigit(sender: UIButton) {
         let digit = sender.currentTitle!
         if userIsTyping{
+            
             if digit == "." && decUsed == true{
                 return
             }else if digit == "." && decUsed == false {
