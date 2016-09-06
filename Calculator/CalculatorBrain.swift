@@ -24,6 +24,8 @@ class CalculatorBrain{
         if text != "="{
             descrip += text
             isPartialResult = true
+        }else{
+            descrip += text
         }
     }
     
@@ -40,7 +42,7 @@ class CalculatorBrain{
         internalProgram.append(operand)
 
     }
-    
+    /*Dictionary of all the operations that will be used in the calculator*/
     var operations: Dictionary<String, Operation> = [
         "π" : Operation.Constant(M_PI),
         "e" : Operation.Constant(M_E),
@@ -126,5 +128,12 @@ class CalculatorBrain{
             return accumulator
         }
     }
+    
+    
+    func setOperand(variableName: String) {
+        setOperand(variableValues[variableName] ?? 0.0)
+    }
+
+    var variableValues: Dictionary<String, Double>= [:]
         
 }

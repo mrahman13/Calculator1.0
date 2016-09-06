@@ -69,10 +69,7 @@ class ViewController: UIViewController {
     }
     
     var savedProgram: CalculatorBrain.PropertyList?
-    
-    //@IBAction func Clear() {
-    //    CalculatorBrain.clear(<#T##CalculatorBrain#>)
-    //}
+
     
     
     @IBAction func save() {
@@ -86,10 +83,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func setOperand(variableName: String){
-        
-    }
-    //var variableValues: Dictionary<String, Double>
+
 
 }
 
